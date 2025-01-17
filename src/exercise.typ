@@ -218,15 +218,15 @@
                 stroke: none,
                 inset: 0pt,
 
-                if footer-left != none {footer-left},
+                if footer-left != none {align(left, footer-left)},
 
-                align(center, context {
+                align(center, if footer-middle != none {footer-middle} else {context {
                     str(counter(page).display())
                     [ \/ ]
                     str(counter(page).final().first())
-                }),
+                }}),
 
-                if footer-left != none {footer-left}
+                if footer-right != none {align(right, footer-right)}
             )
         },
     )
