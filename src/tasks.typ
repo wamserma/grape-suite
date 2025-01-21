@@ -17,10 +17,10 @@
 
 #let make-element(type, no, title, body) = {
     block(inset: 7pt,
-        stroke: (bottom: (paint: purple, dash: "dashed")),
-        fill: blue.lighten(75%), {
+        stroke: (bottom: (paint: colorDark, dash: "dashed")),
+        fill: colorLight, {
 
-        text(fill: purple, strong[#type #no] + title)
+        text(fill: colorDark, strong[#type #no] + title)
     })
 
     block(body)
