@@ -27,6 +27,20 @@
     v(0.5cm)
 }
 
+#let make-lines(num) = {
+    context {
+        if state("grape-suite-show-lines").at(here()) == false {
+            return
+        }
+
+        for i in range(0, num) {
+            v(0.75cm)
+            v(-1.2em)
+            line(length: 100%, stroke: black.lighten(50%))
+        }
+    }
+}
+
 #let make-task(no, title, instruction, body, extra, points, lines, extra-task-type, task-type) = {
     make-element(if extra {extra-task-type} else {task-type},
         no,
@@ -42,18 +56,7 @@
             state("grape-suite-subtask-indent").update((0,))
 
             if body != none { block(body) }
-
-            context {
-                if state("grape-suite-show-lines").at(here()) == false {
-                    return
-                }
-
-                for i in range(0, lines) {
-                    v(0.75cm)
-                    v(-1.2em)
-                    line(length: 100%, stroke: black.lighten(50%))
-                }
-            }
+            make-lines(lines)
         }))
 }
 
@@ -460,7 +463,8 @@
         if type != none {type} else {task-type})
 }
 
-#let subtask(points: 0,
+#let subtask(lines: 0,
+    points: 0,
     tight: false,
     ignore-points: false,
     markers: ("1.", "a)"),
@@ -506,10 +510,16 @@
 
         enum(numbering: (_) => numbering(marker, num), tight: tight, if points != none and points > 0 and show-points {
             place(dx: 100%, [#points P.])
-            block(width: 95%, content)
+            block(width: 95%, {
+              content
+              make-lines(lines)
+            })
         } else {
             content
+            make-lines(lines)
         })
+        
+        
     }
 
     state("grape-suite-subtask-indent", (0,)).update(k => {
