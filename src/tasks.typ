@@ -75,6 +75,7 @@
 }
 
 #let make-solution(no, title, instruction, body, extra, points, solution, solution-type) = {
+    state("grape-suite-show-lines").update(false)
     make-element(solution-type,
         no,
         if title != none [ --- #title] + h(1fr) + if points != none and points > 0 { [#points P.] },
