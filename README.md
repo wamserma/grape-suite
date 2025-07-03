@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This is a (hard) fork of https://github.com/piepert/grape-suite with personal and opinionated changes.
+
 # Grape Suite
 
 The grape suite is a suite consisting of following templates:
