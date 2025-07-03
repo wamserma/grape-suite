@@ -41,7 +41,7 @@
     }
 }
 
-#let make-task(no, title, instruction, body, extra, points, lines, extra-task-type, task-type) = {
+#let make-task(no, title, instruction, body, extra, points, lines, vspace, extra-task-type, task-type) = {
     make-element(if extra {extra-task-type} else {task-type},
         no,
         if title != none [ --- #title] + h(1fr) + if points != none and points > 0 { [#points P.] },
@@ -57,6 +57,7 @@
 
             if body != none { block(body) }
             make-lines(lines)
+            v(vspace)
             /*Punktesumme als Box am Ende der Aufgabe*/
             let s = state("grape-suite-tasks", ())
             context {
@@ -404,6 +405,9 @@
     // number of lines to draw if show-lines of exercise-template is enabled
     lines: 0,
 
+    // amount of blank space for drawings etc.
+    vspace: 0pt,
+
     // number of points, subtask points will be added
     points: 0,
 
@@ -474,6 +478,7 @@
         t.extra,
         t.points,
         lines,
+        vspace,
         if type != none {type} else {extra-task-type},
         if type != none {type} else {task-type})
 }
