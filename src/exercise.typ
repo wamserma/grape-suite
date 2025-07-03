@@ -112,6 +112,9 @@
 
     page-margins: none,
 
+    text-font: ("Atkinson Hyperlegible","Libertinus Serif"),
+    math-font: ("STIX Two Math", "New Computer Modern Math"),
+
     fontsize: 11pt,
 
     show-todolist: true,
@@ -128,9 +131,8 @@
         document-title = title
     }
 
-    set text(font: "Atkinson Hyperlegible", size: fontsize)
-    // show math.equation: set text(font: "Fira Math")
-    show math.equation: set text(font: "STIX Two Math")
+    set text(font: text-font, size: fontsize)
+    show math.equation: set text(font: math-font, size: fontsize)
 
     set par(justify: true)
 
@@ -138,7 +140,7 @@
     set list(indent: 1em)
 
     show link: underline
-    show link: set text(fill: purple)
+    show link: set text(fill: colorDark)
 
     show heading: it => context {
         let num-style = it.numbering
@@ -150,7 +152,7 @@
         let num = text(weight: "thin", numbering(num-style, ..counter(heading).at(here()))+[ \u{200b}])
         let x-offset = -1 * measure(num).width
 
-        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: purple.lighten(25%), num) + [] + text(fill: purple, it.body)))
+        pad(left: x-offset, par(hanging-indent: -1 * x-offset, text(fill: colorLight, num) + [] + text(fill: colorDark, it.body)))
     }
 
     let ufi = ()
@@ -205,26 +207,26 @@
                     }
                 }
             ])
-        ] + v(-0.5em) + line(length: 100%, stroke: purple),
+        ] + v(-0.5em) + line(length: 100%, stroke: colorDark),
 
         footer: if footer != none {footer} else {
             set text(size: 0.75em)
-            line(length: 100%, stroke: purple) + v(-0.5em)
+            line(length: 100%, stroke: colorDark) + v(-0.5em)
 
             table(columns: (1fr, auto, 1fr),
                 align: top,
                 stroke: none,
                 inset: 0pt,
 
-                if footer-left != none {footer-left},
+                if footer-left != none {align(left, footer-left)},
 
-                align(center, context {
+                align(center, if footer-middle != none {footer-middle} else {context {
                     str(counter(page).display())
                     [ \/ ]
                     str(counter(page).final().first())
-                }),
+                }}),
 
-                if footer-left != none {footer-left}
+                if footer-right != none {align(right, footer-right)}
             )
         },
     )
