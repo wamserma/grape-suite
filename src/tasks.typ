@@ -36,7 +36,7 @@
         for i in range(0, num) {
             v(0.75cm)
             v(-1.2em)
-            line(length: 100%, stroke: black.lighten(50%))
+            line(length: 100%, stroke: state("grape-suite-line-color").get())
         }
     }
 }
@@ -57,10 +57,25 @@
 
             if body != none { block(body) }
             make-lines(lines)
-        }))
+            /*Punktesumme als Box am Ende der Aufgabe*/
+            let s = state("grape-suite-tasks", ())
+            context {
+              let k = s.get()
+
+              if (0 != k.len()) {
+                let e = k.at(k.len()-1)
+                if e.points != none and e.points > 0 {
+                  place(dx: 100%-1em, rect(width:6em,align(right,[| #e.points P.])))
+                }
+              }
+            }
+    
+        })
+    )
 }
 
 #let make-solution(no, title, instruction, body, extra, points, solution, solution-type) = {
+    state("grape-suite-show-lines").update(false)
     make-element(solution-type,
         no,
         if title != none [ --- #title] + h(1fr) + if points != none and points > 0 { [#points P.] },

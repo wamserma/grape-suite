@@ -46,6 +46,7 @@
 
     // if task has a defined amount of lines, draw the amount of lines below the task
     show-lines: false,
+    line-color: black.lighten(50%),
 
     // show point distributions after tasks/at the end of the solutions
     show-point-distribution-in-tasks: false,
@@ -274,6 +275,7 @@
 
     state("grape-suite-tasks").update(())
     state("grape-suite-show-lines").update(show-lines)
+    state("grape-suite-line-color").update(line-color)
 
     body
 
