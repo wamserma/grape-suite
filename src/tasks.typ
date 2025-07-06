@@ -552,3 +552,10 @@
         k
     })
 }
+
+#let extra-solution-page = context {
+  if (state("grape-suite-show-lines").at(here()) == true) {
+  v(120em)
+  text(fill:white,"(Fortsetzung)")
+  }
+}
